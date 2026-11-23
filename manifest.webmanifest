@@ -1,0 +1,21 @@
+{
+  "name": "Indian Desi Call Break",
+  "short_name": "Desi Call Break",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#081d16",
+  "theme_color": "#103d2d",
+  "description": "Free offline four-player Call Break card game",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

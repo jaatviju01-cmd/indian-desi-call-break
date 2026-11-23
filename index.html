@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#103d2d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Desi Call Break">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
+<title>Indian Desi Call Break</title>
+<style>
+:root{color-scheme:dark;--bg:#081d16;--panel:#122e24;--gold:#e6bd62;--muted:#b6c9bd;--felt:#176342;--felt2:#0d432d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#173e2d,#071a13 70%);color:#fff;font:16px system-ui,-apple-system,sans-serif;min-height:100vh;padding:env(safe-area-inset-top) 12px env(safe-area-inset-bottom)}
+main{max-width:760px;margin:auto;padding:12px 0 28px}.top{display:flex;align-items:center;justify-content:space-between;gap:8px}.brand{font-weight:950;letter-spacing:1px;font-size:clamp(19px,5vw,27px)}.sub{font-size:11px;color:var(--muted);letter-spacing:2px}.pill{border:1px solid #52715e;border-radius:30px;padding:7px 11px;font-size:12px;color:#f8e5b4}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}.stat,.panel{background:#132e24;border:1px solid #315443;border-radius:14px;padding:11px}.stat{text-align:center;font-size:12px;color:var(--muted)}.stat b{display:block;color:white;font-size:21px;margin-top:3px}
+.table{background:radial-gradient(ellipse at center,#24794e,#0c432e 75%);border:5px solid #79502d;border-radius:24px;padding:12px;box-shadow:inset 0 0 28px #052416,0 8px 20px #0005}
+.seats{display:grid;grid-template-columns:1fr 1fr;gap:9px}.seat{background:#102b22;border:1px solid #b49351;border-radius:12px;padding:8px;text-align:center;font-size:12px;min-height:55px}.seat.active{outline:2px solid var(--gold);background:#28513b}.seat strong{display:block;font-size:14px}.middle{display:flex;justify-content:space-between;align-items:center;margin:12px 0;color:#fff}.trick{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;min-height:86px;align-items:center;text-align:center}.played{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px}
+.playcard{background:#fff;color:#161616;border-radius:8px;width:49px;height:69px;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:850;box-shadow:0 3px 7px #0007}.red{color:#d42d3c!important}
+.hand{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;min-height:95px;padding:10px 4px;background:#10291f;border:1px solid #315443;border-radius:14px}
+.card{width:43px;height:67px;background:#fff;color:#171717;border:1px solid #ddd;border-radius:7px;padding:4px;display:flex;flex-direction:column;justify-content:space-between;font-weight:850;box-shadow:0 2px 5px #0007;cursor:pointer;touch-action:manipulation}.card .suit{text-align:center;font-size:21px}.card.selected{transform:translateY(-9px);outline:3px solid var(--gold)}
+button{font:inherit;cursor:pointer;touch-action:manipulation}.btn{background:var(--gold);color:#241908;border:0;border-radius:11px;padding:11px 14px;font-weight:850}.btn:disabled{opacity:.4}.ghost{background:#1b392c;color:#fff;border:1px solid #52715e;border-radius:10px;padding:9px 12px}.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}.bid{background:#1b392c;color:white;border:1px solid #52715e;border-radius:9px;padding:10px 0;font-weight:800}.bid.chosen,.suit.chosen{background:var(--gold);color:#211707;border-color:#ffdc85}
+.suits{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.suit{background:#1b392c;border:1px solid #52715e;border-radius:12px;color:#fff;padding:9px 3px;font-size:27px}.suit small{display:block;font-size:11px}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.hidden{display:none!important}.muted{color:var(--muted)}.section-title{font-weight:850;margin-bottom:7px}.notice{background:#263c2d;border:1px solid #806c3f;border-radius:12px;padding:11px;font-size:13px;line-height:1.45}.timer{font-size:34px;font-weight:950;color:#ffe09a;text-align:center}.scoreline{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #315443;font-size:14px}.scoreline:last-child{border:0}
+@media(min-width:600px){.table{padding:18px}.card{width:49px}.hand{gap:7px}}
+</style></head>
+<body><main>
+<header class="top"><div><div class="brand">♠ INDIAN DESI CALL BREAK</div><div class="sub">FREE OFFLINE CARD GAME</div></div><div class="pill" id="roundPill">ROUND 1</div></header>
+<div class="stats"><div class="stat">YOUR TRICKS<b id="yourTricks">0</b></div><div class="stat">YOUR BID<b id="yourBid">—</b></div><div class="stat">YOUR SCORE<b id="yourScore">0</b></div></div>
+<section class="table">
+ <div class="seats">
+  <div class="seat" id="seat1">🤖 <strong>Rahul</strong><span id="info1">Waiting</span></div>
+  <div class="seat" id="seat2">🤖 <strong>Aman</strong><span id="info2">Waiting</span></div>
+ </div>
+ <div class="middle"><span>TRUMP: <b id="trumpDisplay">♠ SPADES</b></span><span id="phaseLabel">DEALING</span></div>
+ <div class="trick" id="trick"><span class="muted" style="grid-column:1/-1">The table is ready</span></div>
+ <div class="seats"><div class="seat" id="seat3">🤖 <strong>Simran</strong><span id="info3">Waiting</span></div><div class="seat active" id="seat0">👤 <strong>You</strong><span id="info0">Your hand</span></div></div>
+ <div style="text-align:center;font-size:12px;margin-top:9px;color:#e6f2e9" id="tableMessage">Welcome! Start a new game.</div>
+</section>
+<section class="panel" id="selectionPanel" style="margin-top:12px">
+ <div class="section-title" id="panelTitle">Choose your trump suit</div><div class="muted" id="panelHelp" style="font-size:13px;margin-bottom:10px">After the first 5 cards, choose within 13 seconds.</div>
+ <div id="timer" class="timer">13</div><div class="suits" id="suits">
+ <button class="suit" data-suit="♠">♠<small>Spades</small></button><button class="suit" data-suit="♥">♥<small>Hearts</small></button><button class="suit" data-suit="♦">♦<small>Diamonds</small></button><button class="suit" data-suit="♣">♣<small>Clubs</small></button></div>
+ <div id="bids" class="hidden"><div class="section-title" style="margin-top:12px">How many tricks can you win?</div><div class="grid" id="bidGrid"></div></div>
+ <div class="row" style="margin-top:10px"><button class="btn hidden" id="confirmBtn">Confirm</button><button class="ghost hidden" id="autoBtn">Auto-select</button></div>
+</section>
+<section style="margin-top:12px"><div class="row" style="justify-content:space-between"><b>YOUR 13 CARDS</b><span class="muted" id="handCount" style="font-size:12px">0 cards</span></div><div class="hand" id="hand"></div><div class="row" style="margin-top:9px"><button class="btn" id="playBtn" disabled>PLAY SELECTED CARD</button><button class="ghost" id="sortBtn">Sort cards</button></div></section>
+<section class="panel" style="margin-top:12px"><div class="row"><b>🏆 SCOREBOARD</b><button class="ghost" id="scoreDetails" style="flex:0 0 auto">Round details</button></div><div id="scoreboard" style="margin-top:8px"></div><div class="muted" style="font-size:11px;margin-top:8px">First player to reach 51 points triggers one final round for everyone. Highest score after that round wins.</div></section>
+<div class="row" style="margin-top:12px"><button class="ghost" id="newGame">↻ New game</button><button class="ghost" id="nextRound">Next round →</button></div>
+<div class="notice" style="margin-top:12px"><b>How this version works</b><br>Deal 5 cards, pause for a 13-second trump selection, then deal 4 + 4. All players bid after receiving 13 cards. Standard Call Break scoring is used: make your bid to score the bid plus 0.1 per extra trick; miss it and lose the bid amount. Offline computer opponents are included. Online friends rooms are not included in this offline PWA.</div>
+</main>
+<script>
+const $=id=>document.getElementById(id), names=['You','Rahul','Aman','Simran'], suits=['♠','♥','♦','♣'], ranks=['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+let hands=[],scores=[0,0,0,0],bids=[0,0,0,0],tricks=[0,0,0,0],table=[],turn=0,selected=-1,round=1,trump='♠',phase='idle',timer=null,seconds=13,finalRound=false,finalPlayed=false,gameOver=false,dealStage=0,roundResults=[];
+function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function makeDeck(){return shuffle(suits.flatMap(s=>ranks.map(r=>({s,r}))))}
+const v=c=>ranks.indexOf(c.r), red=c=>c.s==='♥'||c.s==='♦', label=c=>c.r+c.s;
+function sortHand(h){h.sort((a,b)=>suits.indexOf(a.s)-suits.indexOf(b.s)||v(a)-v(b))}
+function legal(p){if(!table.length)return hands[p].slice();let follow=hands[p].filter(c=>c.s===table[0].c.s);return follow.length?follow:hands[p].slice()}
+function winner(){let led=table[0].c.s, trumpCards=table.filter(x=>x.c.s===trump);let arr=trumpCards.length?trumpCards:table.filter(x=>x.c.s===led);return arr.reduce((a,b)=>v(a.c)>v(b.c)?a:b)}
+function estimateBid(h){let sp=h.filter(c=>c.s===trump).length, high=h.filter(c=>v(c)>=11).length, aces=h.filter(c=>c.r==='A').length;return Math.max(1,Math.min(8,Math.round(sp*.48+high*.35+aces*.25)))}
+function message(t){$('tableMessage').textContent=t}
+function clearTimer(){if(timer){clearInterval(timer);timer=null}}
+function setPhase(p){phase=p;$('phaseLabel').textContent=p.toUpperCase()}
+function startGame(){clearTimer();scores=[0,0,0,0];round=1;finalRound=false;finalPlayed=false;gameOver=false;roundResults=[];startRound()}
+function startRound(){
+ clearTimer();hands=[[],[],[],[]];bids=[0,0,0,0];tricks=[0,0,0,0];table=[];selected=-1;turn=0;dealStage=0;trump='♠';let deck=makeDeck();
+ // deal one card at a time in 5-card batch, then pause for trump selection
+ for(let i=0;i<5;i++)for(let p=0;p<4;p++)hands[p].push(deck.pop());
+ window.remainingDeck=deck;hands.forEach(sortHand);setPhase('trump');seconds=13;
+ $('selectionPanel').classList.remove('hidden');$('suits').classList.remove('hidden');$('bids').classList.add('hidden');$('confirmBtn').classList.add('hidden');$('autoBtn').classList.remove('hidden');$('panelTitle').textContent='Choose your trump suit';$('panelHelp').textContent='You have 13 seconds to choose the trump suit. Bots choose automatically.';$('timer').textContent='13';$('roundPill').textContent='ROUND '+round+(finalRound?' • FINAL':'');
+ // bots make suit choices automatically; user can change selection during timer
+ let botTrump=suits[Math.floor(Math.random()*4)];window.botTrump=botTrump;
+ document.querySelectorAll('.suit').forEach(b=>b.classList.remove('chosen'));
+ $('trumpDisplay').textContent='Waiting for choice';message('First 5 cards dealt. Choose your trump suit before the 13-second timer ends.');
+ render();timer=setInterval(()=>{seconds--;$('timer').textContent=seconds;if(seconds<=0){clearTimer();chooseTrump(document.querySelector('.suit.chosen')?.dataset.suit||window.botTrump,true)}},1000);
+}
+function chooseTrump(s,automatic=false){if(phase!=='trump')return;clearTimer();trump=s;document.querySelectorAll('.suit').forEach(b=>b.classList.toggle('chosen',b.dataset.suit===s));$('trumpDisplay').textContent=s+' '+({ '♠':'SPADES','♥':'HEARTS','♦':'DIAMONDS','♣':'CLUBS'}[s]);message((automatic?'Time expired. ':'')+'Trump is '+s+'. Dealing the remaining 8 cards…');setPhase('deal');$('timer').textContent='✓';$('panelTitle').textContent='Trump selected';$('panelHelp').textContent='Dealing 4 cards, then the final 4 cards.';$('suits').classList.add('hidden');$('autoBtn').classList.add('hidden');setTimeout(()=>{for(let batch=0;batch<2;batch++){for(let i=0;i<4;i++)for(let p=0;p<4;p++)hands[p].push(window.remainingDeck.pop())}hands.forEach(sortHand);$('handCount').textContent='13 cards';beginBidding()},650)}
+function beginBidding(){setPhase('bid');bids=[0,estimateBid(hands[1]),estimateBid(hands[2]),estimateBid(hands[3])];$('panelTitle').textContent='Make your call (bid)';$('panelHelp').textContent='Choose how many tricks you think you can win.';$('timer').textContent='';$('suits').classList.add('hidden');$('bids').classList.remove('hidden');$('confirmBtn').classList.add('hidden');$('autoBtn').classList.add('hidden');$('bidGrid').innerHTML='';for(let n=1;n<=13;n++){let b=document.createElement('button');b.className='bid';b.textContent=n;b.onclick=()=>{bids[0]=n;document.querySelectorAll('.bid').forEach(x=>x.classList.toggle('chosen',x===b));$('confirmBtn').classList.remove('hidden')};$('bidGrid').append(b)}message('All 13 cards dealt. Choose your bid from 1 to 13.');render()}
+function confirmBid(){if(!bids[0])return;setPhase('play');$('selectionPanel').classList.add('hidden');message('Bids locked. Your turn to lead!');turn=0;render()}
+function render(){
+ $('roundPill').textContent='ROUND '+round+(finalRound?' • FINAL':'');$('yourTricks').textContent=tricks[0];$('yourBid').textContent=bids[0]||'—';$('yourScore').textContent=scores[0].toFixed(1);
+ for(let p=0;p<4;p++){ $('info'+p).textContent=(phase==='trump'?'5 cards':hands[p].length+' cards')+(bids[p]?' • bid '+bids[p]:'')+' • tricks '+tricks[p];$('seat'+p).classList.toggle('active',p===turn&&phase==='play');}
+ $('handCount').textContent=hands[0].length+' cards';$('hand').innerHTML='';
+ hands[0].forEach((c,i)=>{let b=document.createElement('button');b.className='card '+(red(c)?'red ':'')+(selected===i?'selected':'');b.innerHTML='<span>'+c.r+'</span><span class="suit">'+c.s+'</span><span style="text-align:right;font-size:11px">'+c.r+'</span>';b.disabled=phase!=='play'||turn!==0;b.onclick=()=>{selected=i;render()};$('hand').append(b)});
+ $('playBtn').disabled=phase!=='play'||turn!==0||selected<0||!legal(0).includes(hands[0][selected]);
+ $('trick').innerHTML='';if(!table.length)$('trick').innerHTML='<span class="muted" style="grid-column:1/-1">Waiting for cards…</span>';
+ table.forEach(x=>{let d=document.createElement('div');d.className='played';let c=document.createElement('div');c.className='playcard '+(red(x.c)?'red':'');c.textContent=label(x.c);let n=document.createElement('span');n.textContent=names[x.p];d.append(c,n);$('trick').append(d)});
+ $('scoreboard').innerHTML=names.map((n,i)=>'<div class="scoreline"><span>'+(i?'🤖 ':'👤 ')+n+(bids[i]?' · '+tricks[i]+'/'+bids[i]:'')+'</span><b>'+scores[i].toFixed(1)+'</b></div>').join('');
+}
+function playCard(p,idx){if(phase!=='play'||p!==turn||gameOver)return;let c=hands[p][idx];if(!legal(p).includes(c))return;hands[p].splice(idx,1);table.push({p,c});selected=-1;render();if(table.length===4){setTimeout(resolveTrick,550);return}turn=(turn+1)%4;if(turn!==0)setTimeout(botPlay,450);else message('Your turn. Follow suit if you can.')}
+function botPlay(){if(phase!=='play')return;let opts=legal(turn),choice; if(!table.length){choice=opts.slice().sort((a,b)=>v(a)-v(b))[Math.floor(opts.length*.65)]}else{let current=winner(),led=table[0].c.s;let winners=opts.filter(c=>(c.s===trump&&current.c.s!==trump)||(c.s===current.c.s&&v(c)>v(current.c)));choice=winners.length?winners.sort((a,b)=>v(a)-v(b))[0]:opts.slice().sort((a,b)=>v(a)-v(b))[0]}playCard(turn,hands[turn].indexOf(choice))}
+function resolveTrick(){let w=winner();tricks[w.p]++;message(names[w.p]+' wins the trick with '+label(w.c)+'.');table=[];turn=w.p;render();if(hands.every(h=>!h.length)){finishRound();return}setTimeout(()=>{if(turn===0)message('Your lead. Play any card.');else botPlay()},450)}
+function finishRound(){setPhase('round-end');for(let i=0;i<4;i++){let delta=tricks[i]>=bids[i]?bids[i]+(tricks[i]-bids[i])*.1:-bids[i];scores[i]=Math.round((scores[i]+delta)*10)/10}roundResults.push({bids:[...bids],tricks:[...tricks],scores:[...scores]});render();$('selectionPanel').classList.remove('hidden');$('suits').classList.add('hidden');$('bids').classList.add('hidden');$('confirmBtn').classList.add('hidden');$('autoBtn').classList.add('hidden');
+ if(finalRound){gameOver=true;let max=Math.max(...scores),winners=scores.map((s,i)=>s===max?names[i]:null).filter(Boolean);$('panelTitle').textContent='🏆 Game over!';$('panelHelp').textContent='Winner: '+winners.join(' & ')+' with '+max.toFixed(1)+' points.';message('Final round complete. '+winners.join(' & ')+' wins!');$('timer').textContent='🏆';$('nextRound').textContent='New game';}
+ else {let qualified=scores.some(s=>s>=51);if(qualified){finalRound=true;$('panelTitle').textContent='🏁 Final chance round';$('panelHelp').textContent='A player has reached 51. Everyone gets one more round. Highest score after this round wins.';message('51-point threshold reached! One final round for all four players.');$('timer').textContent='FINAL';}else{$('panelTitle').textContent='Round '+round+' complete';$('panelHelp').textContent='Check the scores, then start the next round.';$('timer').textContent='✓';message('Round complete. Highest score so far: '+Math.max(...scores).toFixed(1));}}
+ $('nextRound').disabled=false;$('nextRound').textContent=finalRound?'Play final round →':'Next round →';}
+function next(){if(gameOver){startGame();$('nextRound').textContent='Next round →';return}if(phase!=='round-end'){message('Finish this round before starting another.');return}round++;startRound()}
+document.querySelectorAll('.suit').forEach(b=>b.addEventListener('click',()=>{if(phase!=='trump')return;document.querySelectorAll('.suit').forEach(x=>x.classList.toggle('chosen',x===b));}));
+$('confirmBtn').onclick=confirmBid;$('autoBtn').onclick=()=>{if(phase==='trump')chooseTrump(document.querySelector('.suit.chosen')?.dataset.suit||window.botTrump)};
+$('playBtn').onclick=()=>{if(selected>=0)playCard(0,selected)};
+$('sortBtn').onclick=()=>{sortHand(hands[0]);selected=-1;render()};
+$('newGame').onclick=startGame;$('nextRound').onclick=next;
+$('scoreDetails').onclick=()=>{message(names.map((n,i)=>n+': bid '+bids[i]+', tricks '+tricks[i]+', total '+scores[i].toFixed(1)).join(' | '))};
+startGame();
+</script>
+<script>if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});</script>
+</body></html>
